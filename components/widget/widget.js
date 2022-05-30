@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { SearchIcon } from "@heroicons/react/outline";
-import {Trending} from "../Trending";
+import {Trending} from "../trending";
 import Image from "next/image";
 
 export function Widgets({ trendingResults, followResults }) {
