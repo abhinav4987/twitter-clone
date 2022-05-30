@@ -6,10 +6,12 @@ import {getProviders, getSession, useSession} from 'next-auth/react';
 
 
 export default function Home(data) {
+
+  const {data: session} = useSession();
+
+  const {trendingResults, followResults, providers} = data;
   console.log(data);
-  // console.log(providers, trendingResults);
-  // const {data: session} = useSession();
-  // if(!session) return <Login  providers={providers} />
+  if(!session) return <Login providers={providers}/>
   return (
     <div >
       <Head>
@@ -31,16 +33,17 @@ export default function Home(data) {
 }
 
 
-export async function getServerSidePorps(context) {
+export async function getServerSideProps(context) {
+  
   const trendingResults = await fetch("https://jsonkeeper.com/b/NKEV").then(
     (res) => res.json()
   );
   const followResults = await fetch("https://jsonkeeper.com/b/WWMJ").then(
     (res) => res.json()
   );
-   const providers = await getProviders();
+
+  const providers = await getProviders();
   const session = await getSession(context);
-  console.log("my providers =>",providers)
   return {
     props : {
       trendingResults,

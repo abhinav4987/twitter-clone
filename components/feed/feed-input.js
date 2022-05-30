@@ -9,7 +9,8 @@ import {
 } from "@firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "@firebase/storage";
 import { db, storage } from '../../firebase';
-import { async } from '@firebase/util';
+import { useSession } from 'next-auth/react';
+
 // import EmojiPicker from '../emoji-picker';
 
 
@@ -20,7 +21,8 @@ function FeedInput() {
   const [showEmojis, setShowEmojis] = useState(false);
   const [loading, setLoading] = useState(false);
   const filePickerRef = useRef(null);
-  
+  const {data: session} = useSession();
+
   const addImageToPost =(e) => {
     const reader = new FileReader();
      if (e.target.files[0]) {
@@ -37,10 +39,10 @@ function FeedInput() {
     setLoading(true);
 
     const docRef = await addDoc(collection(db, 'posts'), {
-      // id: session.user.uid,
-      // username: session.user.name,
-      // userImg: session.user.image,
-      // tag: session.user.tag,
+      id: session.user.uid,
+      username: session.user.name,
+      userImg: session.user.image,
+      tag: session.user.tag,
       text: input,
       timestamp: serverTimestamp(),
     });
@@ -65,7 +67,7 @@ function FeedInput() {
     <div className={`border-b border-gray-700 p-3 flex space-x-3 overflow-y-scroll scrollbar-hide ${loading && "opacity-60"}`}>
          {/* eslint-disable-next-line @next/next/no-img-element */}
         <img 
-            src={"https://images.unsplash.com/photo-1610276198568-eb6d0ff53e48?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cG90cmFpdHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"} 
+            src={session.user.image} 
             alt="" 
             className='h-11 w-11 cursor-pointer rounded-full '
           />
