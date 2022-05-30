@@ -15,7 +15,7 @@ function Login({providers}) {
         
         <div>
             {
-                Object.values(providers).map((provider) => (
+                providers && Object.values(providers).map((provider) => (
                     <div key={provider.name}>
                         <button
                             onClick={() => signIn(provider.id, {callbackUrl: '/'})} 
