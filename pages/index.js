@@ -12,7 +12,7 @@ export default function Home(data) {
    const [isOpen, setIsOpen] = useRecoilState(modalState);
 
   const {trendingResults, followResults, providers} = data;
-  console.log(data);
+  
   if(!session) return <Login providers={providers}/>
   return (
     <div >
@@ -41,10 +41,10 @@ export default function Home(data) {
 export async function getServerSideProps(context) {
   
   const trendingResults = await fetch("https://jsonkeeper.com/b/NKEV").then(
-    (res) => res.json()
+    (res) => JSON.parse(JSON.stringify(res))
   );
   const followResults = await fetch("https://jsonkeeper.com/b/WWMJ").then(
-    (res) => res.json()
+    (res) => JSON.parse(JSON.stringify(res))
   );
 
   const providers = await getProviders();
