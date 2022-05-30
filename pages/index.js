@@ -22,7 +22,7 @@ export default function Home(data) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col bg-black min-h-screen max-w-[1500px] mx-auto">
+      <main className="flex  bg-black min-h-screen max-w-[1500px] mx-auto">
         <Sidebar />
         <Feed />
         <Widgets
