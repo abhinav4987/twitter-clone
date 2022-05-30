@@ -1,13 +1,15 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { Sidebar, Feed, Login } from '../components'
+import { Sidebar, Feed, Login, Widgets, CommentModal } from '../components'
 import styles from '../styles/Home.module.css'
 import {getProviders, getSession, useSession} from 'next-auth/react';
-
+import { useRecoilState } from "recoil";
+import { modalState } from '../atom/modal-atom';
 
 export default function Home(data) {
 
   const {data: session} = useSession();
+   const [isOpen, setIsOpen] = useRecoilState(modalState);
 
   const {trendingResults, followResults, providers} = data;
   console.log(data);
@@ -23,9 +25,12 @@ export default function Home(data) {
       <main className="flex flex-col bg-black min-h-screen max-w-[1500px] mx-auto">
         <Sidebar />
         <Feed />
-        {/* Widgets */}
+        <Widgets
+          trendingResults={trendingResults}
+          followResults={followResults}
+        />
 
-        {/* modals */}
+        {isOpen && <CommentModal />}
 
       </main>
     </div>
